@@ -8,22 +8,25 @@ const Shape = sketch.Shape;
 const UI = sketch.UI;
 const Rectangle = sketch.Rectangle;
 
-let rectX = 0;
-let rectY = 0;
+
 const rect = (x = 0, y = 0) => new Rectangle(x, y, 100, 100);
 
-const colorShape = (color, x, y) =>
+const colorShape = (name, color, x, y) =>
   new Shape({
     parent: page,
+    name,
     frame: rect(x, y),
     style: {
       fills: [color],
     },
   });
 
+  let rectX = 0;
+  let rectY = 0;
+
 export default function() {
   UI.getInputFromUser(
-    "What's your name?",
+    "Paste color palette JSON",
     {
       initialValue: "Appleseed",
       numberOfLines: 30,
@@ -35,12 +38,12 @@ export default function() {
       }
       const parsed = JSON.parse(value);
       for (const palette in parsed) {
-        for (const key of Object.values(parsed[palette])) {
-          colorShape(key, rectX, rectY)
+        for (const [label, hex] of Object.entries(parsed[palette])) {
+          colorShape(label, hex, rectX, rectY)
           rectX += 100;
-        }
-        rectY += 100;
-        rectX = 0;
+        } 
+        rectY += 200;
+        rectX = 0; 
       }
     }
   );
