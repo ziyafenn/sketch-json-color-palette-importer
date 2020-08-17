@@ -1,15 +1,21 @@
+/* eslint-disable prefer-destructuring */
+// eslint-disable-next-line import/no-unresolved
 import sketch from "sketch";
-let document = sketch.getSelectedDocument();
-let page = document.selectedPage;
-let Shape = sketch.Shape;
-let UI = sketch.UI;
-let Rectangle = sketch.Rectangle;
-var rect = new Rectangle(0, 0, 200, 500);
 
-const colorShape = (color) =>
+const document = sketch.getSelectedDocument();
+const page = document.selectedPage;
+const Shape = sketch.Shape;
+const UI = sketch.UI;
+const Rectangle = sketch.Rectangle;
+
+let rectX = 0;
+let rectY = 0;
+const rect = (x = 0, y = 0) => new Rectangle(x, y, 100, 100);
+
+const colorShape = (color, x, y) =>
   new Shape({
     parent: page,
-    frame: rect,
+    frame: rect(x, y),
     style: {
       fills: [color],
     },
@@ -30,8 +36,11 @@ export default function() {
       const parsed = JSON.parse(value);
       for (const palette in parsed) {
         for (const key of Object.values(parsed[palette])) {
-          colorShape(key)
+          colorShape(key, rectX, rectY)
+          rectX += 100;
         }
+        rectY += 100;
+        rectX = 0;
       }
     }
   );
