@@ -6,6 +6,7 @@ const document = sketch.getSelectedDocument();
 const page = document.selectedPage;
 const Artboard = sketch.Artboard;
 const Shape = sketch.ShapePath;
+const SharedStyle = sketch.SharedStyle;
 const UI = sketch.UI;
 const Rectangle = sketch.Rectangle;
 
@@ -13,21 +14,25 @@ const Rectangle = sketch.Rectangle;
 const newArtboard = (name, y) => new Artboard({
   parent: page,
   name,
-  flowStartPoint: true,
   frame: { x: 0, y, width: 1000, height: 100 },
 })
 
 const rect = (x = 0) => new Rectangle(x, 0, 100, 100);
 
-const colorShape = (parent, name, color, x, y) =>
+const colorShape = (parent, name, color, x, y, sharedStyle) =>
   new Shape({
     parent,
     name,
     frame: rect(x, y),
-    style: {
-      fills: [color],
-    },
+    sharedStyle,
   });
+
+  const newSharedStyle = (name, style) => document.sharedTextStyles.push({
+    name,
+    style: {
+      fills: [style]
+    }
+  })
 
   let rectX = 0;
   let rectY = 0;
@@ -50,7 +55,8 @@ export default function() {
        // paletteArboard
        // let paletteArtboardId = paletteArboard.id
         for (const [label, hex] of Object.entries(parsed[palette])) {
-          colorShape(paletteArboard, label, hex, rectX)
+          const createdSs = newSharedStyle(`${palette}/${label}`, hex);
+          colorShape(paletteArboard, label, rectX, createdSs)
           rectX += 100;
         } 
         rectY += 200;
