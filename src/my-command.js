@@ -1,70 +1,71 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line import/no-unresolved
-import sketch from "sketch";
+import sketch from 'sketch'
 
-const document = sketch.getSelectedDocument();
-const page = document.selectedPage;
-const Artboard = sketch.Artboard;
-const Shape = sketch.ShapePath;
-const SharedStyle = sketch.SharedStyle;
-const UI = sketch.UI;
-const Rectangle = sketch.Rectangle;
+const document = sketch.getSelectedDocument()
+const page = document.selectedPage
+const Artboard = sketch.Artboard
+const Shape = sketch.ShapePath
+const UI = sketch.UI
 
+const newArtboard = (name, y) =>
+  new Artboard({
+    parent: page,
+    name,
+    frame: { x: 0, y, width: 1000, height: 100 },
+  })
 
-const newArtboard = (name, y) => new Artboard({
-  parent: page,
-  name,
-  frame: { x: 0, y, width: 1000, height: 100 },
-})
-
-const rect = (x = 0) => new Rectangle(x, 0, 100, 100);
-
-const colorShape = (parent, name, color, x, y, sharedStyle) =>
+const colorShape = (parent, name, x, sharedStyle) =>
   new Shape({
     parent,
     name,
-    frame: rect(x, y),
+    frame: { x, y: 0, width: 100, height: 100 },
     sharedStyle,
-  });
-
-  const newSharedStyle = (name, style) => document.sharedTextStyles.push({
-    name,
-    style: {
-      fills: [style]
-    }
+    /*    style: {
+      fills: [style],
+    },
+    */
   })
 
-  let rectX = 0;
-  let rectY = 0;
+const newSharedStyle = (name, style) =>
+  document.sharedLayerStyles.push({
+    name,
+    styleType: 'Layer',
+    style: {
+      fills: [style],
+    },
+  })
+
+let rectX = 0
+let rectY = 0
 
 export default function() {
   UI.getInputFromUser(
-    "Paste color palette JSON",
+    'Paste color palette JSON',
     {
-      initialValue: "Appleseed",
+      initialValue: 'Appleseed',
       numberOfLines: 30,
     },
     (err, value) => {
       if (err) {
         // most likely the user canceled the input
-        return;
+        return
       }
-      const parsed = JSON.parse(value);
+      const parsed = JSON.parse(value)
       for (const palette in parsed) {
-        const paletteArboard = newArtboard(palette, rectY);
-       // paletteArboard
-       // let paletteArtboardId = paletteArboard.id
+        const paletteArboard = newArtboard(palette, rectY)
         for (const [label, hex] of Object.entries(parsed[palette])) {
-          const createdSs = newSharedStyle(`${palette}/${label}`, hex);
-          colorShape(paletteArboard, label, rectX, createdSs)
-          rectX += 100;
-        } 
-        rectY += 200;
-        rectX = 0; 
+          const paletteStyle = newSharedStyle(`${palette}/${label}`, hex)
+          //     log(paletteStyle.id);
+          colorShape(paletteArboard, label, rectX, hex)
+          rectX += 100
+        }
+        rectY += 200
+        rectX = 0
       }
     }
-  );
+  )
 }
 
-// TODO Create artboard, 
+// TODO Create artboard,
 // TODO create layer styles with palette/label
