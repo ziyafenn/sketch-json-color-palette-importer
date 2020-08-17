@@ -4,16 +4,24 @@ import sketch from "sketch";
 
 const document = sketch.getSelectedDocument();
 const page = document.selectedPage;
-const Shape = sketch.Shape;
+const Artboard = sketch.Artboard;
+const Shape = sketch.ShapePath;
 const UI = sketch.UI;
 const Rectangle = sketch.Rectangle;
 
 
-const rect = (x = 0, y = 0) => new Rectangle(x, y, 100, 100);
+const newArtboard = (name, y) => new Artboard({
+  parent: page,
+  name,
+  flowStartPoint: true,
+  frame: { x: 0, y, width: 1000, height: 100 },
+})
 
-const colorShape = (name, color, x, y) =>
+const rect = (x = 0) => new Rectangle(x, 0, 100, 100);
+
+const colorShape = (parent, name, color, x, y) =>
   new Shape({
-    parent: page,
+    parent,
     name,
     frame: rect(x, y),
     style: {
@@ -38,8 +46,11 @@ export default function() {
       }
       const parsed = JSON.parse(value);
       for (const palette in parsed) {
+        const paletteArboard = newArtboard(palette, rectY);
+       // paletteArboard
+       // let paletteArtboardId = paletteArboard.id
         for (const [label, hex] of Object.entries(parsed[palette])) {
-          colorShape(label, hex, rectX, rectY)
+          colorShape(paletteArboard, label, hex, rectX)
           rectX += 100;
         } 
         rectY += 200;
@@ -48,3 +59,6 @@ export default function() {
     }
   );
 }
+
+// TODO Create artboard, 
+// TODO create layer styles with palette/label
