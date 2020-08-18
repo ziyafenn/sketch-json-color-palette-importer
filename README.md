@@ -18,3 +18,7 @@ This plugin will add all the colors from the JSON and create a shared layer styl
 
 You can use [Material Design Palette Generator](https://materialpalettes.com/) to generate accessible color palettes and export them in JSON that will work with this plugin without any modifications.
 You can also use [ColorBox by Lyft Design](https://www.colorbox.io/) to generate a color palette, but it will require slight modification to the JSON code to make it work with the plugin.
+
+
+## Troubleshooting
+If you have any problem with importing JSON code, try to validate it first and then format/prettify it. For validation and formatting you can use any available online tool, such as https://jsonformatter.org/
