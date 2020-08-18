@@ -1,3 +1,4 @@
+![sketch-json-color-palette-importer](https://github.com/ziyafenn/sketch-json-color-palette-importer/blob/master/assets/icon.png?raw=true)
 # Sketch JSON Color Palette Importer
 Create shared layer styles by importing JSON color palettes
 
