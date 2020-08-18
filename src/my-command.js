@@ -55,7 +55,7 @@ export default function() {
         const paletteArboard = newArtboard(palette, artboardY)
         for (const [label, hex] of Object.entries(parsed[palette])) {
          const newColor = colorShape(paletteArboard, label, layerX, hex);
-         const newStyle = newSharedStyle(`${palette}/${label}`, newColor)
+         const newStyle = newSharedStyle(`Color/${palette}/${label}`, newColor)
          newColor.sharedStyleId = newStyle.id
          layerX += 100
         }
