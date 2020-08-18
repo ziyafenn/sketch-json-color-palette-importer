@@ -1,5 +1,10 @@
 {
   "name": "json-color-palette-importer",
+  "homepage": "https://github.com/ziyafenn/sketch-json-color-palette-importer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ziyafenn/sketch-json-color-palette-importer"
+  },
   "version": "0.1.0",
   "engines": {
     "sketch": ">=3.0"
