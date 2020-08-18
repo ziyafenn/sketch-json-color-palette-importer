@@ -11,7 +11,7 @@ This plugin will add all the colors from the JSON and create a shared layer styl
   PALETTE_NAME: {
     COLOR_LABEL: COLOR_HEX,
     ...
-  }
+  },
   ...
 }
 ```
@@ -22,3 +22,13 @@ You can also use [ColorBox by Lyft Design](https://www.colorbox.io/) to generate
 
 ## Troubleshooting
 If you have any problem with importing JSON code, try to validate it first and then format/prettify it. For validation and formatting you can use any available online tool, such as https://jsonformatter.org/
+
+
+## TO-DO
+- [ ] Check if JSON format is correct
+- [ ] Check if any artboard already exisits inside page and create new artboards after them
+- [ ] Ask to create a style (checkbox)
+- [ ] Support any JSON format?
+
+## Licence
+MIT
