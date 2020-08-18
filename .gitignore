@@ -107,4 +107,4 @@ dist
 
 .DS_Store
 package-lock.json
-json-color-palette-generator.sketchplugin/
+json-color-palette-importer.sketchplugin/

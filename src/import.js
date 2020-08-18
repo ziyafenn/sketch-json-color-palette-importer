@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line import/no-unresolved
 import sketch from 'sketch'
-import {INITIAL_VALUE} from "./shared"
+import { INITIAL_VALUE } from './shared'
 
 const document = sketch.getSelectedDocument()
 const page = document.selectedPage
@@ -10,13 +10,12 @@ const Shape = sketch.ShapePath
 const UI = sketch.UI
 const SharedStyle = sketch.SharedStyle
 
-
 const newArtboard = (name, y) =>
   new Artboard({
     parent: page,
     name,
     frame: { x: 0, y, width: 1000, height: 100 },
-    flowStartPoint: true
+    flowStartPoint: true,
   })
 
 const colorShape = (parent, name, x, color) =>
@@ -24,12 +23,13 @@ const colorShape = (parent, name, x, color) =>
     parent,
     name,
     frame: { x, y: 0, width: 100, height: 100 },
-     style: {
+    style: {
       fills: [color],
-    }
+    },
   })
 
-  const newSharedStyle = (name, style) => SharedStyle.fromStyle({
+const newSharedStyle = (name, style) =>
+  SharedStyle.fromStyle({
     name,
     style: style.style,
     document,
@@ -54,20 +54,19 @@ export default function() {
       for (const palette in parsed) {
         const paletteArboard = newArtboard(palette, artboardY)
         for (const [label, hex] of Object.entries(parsed[palette])) {
-         const newColor = colorShape(paletteArboard, label, layerX, hex);
-         const newStyle = newSharedStyle(`Color/${palette}/${label}`, newColor)
-         newColor.sharedStyleId = newStyle.id
-         layerX += 100
+          const newColor = colorShape(paletteArboard, label, layerX, hex)
+          const newStyle = newSharedStyle(`Color/${palette}/${label}`, newColor)
+          newColor.sharedStyleId = newStyle.id
+          layerX += 100
         }
         artboardY += 200
         layerX = 0
       }
-      
     }
   )
- 
 }
 
 // TODO fix linter issues
 // TODO Check if artboard exists, add after
 // TODO Manifest, publish
+// TODO Icon

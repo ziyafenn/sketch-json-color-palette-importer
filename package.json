@@ -1,13 +1,13 @@
 {
-  "name": "json-color-palette-generator",
+  "name": "json-color-palette-importer",
   "version": "0.1.0",
   "engines": {
     "sketch": ">=3.0"
   },
   "skpm": {
-    "name": "json-color-palette-generator",
+    "name": "json-color-palette-importer",
     "manifest": "src/manifest.json",
-    "main": "json-color-palette-generator.sketchplugin"
+    "main": "json-color-palette-importer.sketchplugin"
   },
   "scripts": {
     "build": "skpm-build",
@@ -40,8 +40,6 @@
       "git add"
     ]
   },
-  "author": "Ziya <ziya.fenn@gmail.com>",
-  "dependencies": {
-    "sketch-module-web-view": "^3.4.1"
-  }
+  "author": "Ziya Fenn <hello@ziyafenn.com>",
+  "dependencies": {}
 }
