@@ -80,6 +80,4 @@ export default function() {
 }
 
 // TODO Check if artboard exists, add after
-// TODO Manifest, publish
-// TODO Icon
 // TODO ask to create a style

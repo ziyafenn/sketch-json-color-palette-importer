@@ -1,11 +1,12 @@
 {
   "name": "JSON Color Palette Importer",
-  "description": "Import JSON color palettes and create shared layer styles from them",
+  "description": "Create shared layer styles by importing JSON color palettes",
   "author": "Ziya Fenn",
   "authorEmail": "hello@ziyafenn.com",
   "homepage": "https://github.com/ziyafenn/sketch-json-color-palette-importer",
   "compatibleVersion": 53,
   "bundleVersion": 1,
+  "icon": "icon.png",
   "commands": [
     {
       "name": "Import JSON Color Palettes",
