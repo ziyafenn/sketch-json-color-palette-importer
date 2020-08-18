@@ -3,7 +3,7 @@
   "description": "Import JSON color palettes and create shared layer styles from them",
   "author": "Ziya Fenn",
   "authorEmail": "hello@ziyafenn.com",
-  "homepage": "https://github.com/example/select-shapes",
+  "homepage": "https://github.com/ziyafenn/sketch-json-color-palette-importer",
   "compatibleVersion": 53,
   "bundleVersion": 1,
   "commands": [

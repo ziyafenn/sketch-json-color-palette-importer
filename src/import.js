@@ -51,8 +51,9 @@ export default function() {
         return
       }
       const parsed = JSON.parse(value)
-      for (const palette in parsed) {
+      Object.keys(parsed).forEach(palette => {
         const paletteArboard = newArtboard(palette, artboardY)
+        // eslint-disable-next-line no-restricted-syntax
         for (const [label, hex] of Object.entries(parsed[palette])) {
           const newColor = colorShape(paletteArboard, label, layerX, hex)
           const newStyle = newSharedStyle(`Color/${palette}/${label}`, newColor)
@@ -61,12 +62,12 @@ export default function() {
         }
         artboardY += 200
         layerX = 0
-      }
+      })
     }
   )
 }
 
-// TODO fix linter issues
 // TODO Check if artboard exists, add after
 // TODO Manifest, publish
 // TODO Icon
+// TODO ask to create a style
