@@ -44,6 +44,8 @@ export default function() {
     {
       initialValue: INITIAL_VALUE,
       numberOfLines: 30,
+      description:
+        'This is an example JSON color palette. Replace it with your own JSON code.',
     },
     (err, value) => {
       if (err) {
