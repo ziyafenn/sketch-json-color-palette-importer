@@ -50,19 +50,31 @@ export default function() {
         // most likely the user canceled the input
         return
       }
-      const parsed = JSON.parse(value)
-      Object.keys(parsed).forEach(palette => {
-        const paletteArboard = newArtboard(palette, artboardY)
-        // eslint-disable-next-line no-restricted-syntax
-        for (const [label, hex] of Object.entries(parsed[palette])) {
-          const newColor = colorShape(paletteArboard, label, layerX, hex)
-          const newStyle = newSharedStyle(`Color/${palette}/${label}`, newColor)
-          newColor.sharedStyleId = newStyle.id
-          layerX += 100
-        }
-        artboardY += 200
-        layerX = 0
-      })
+
+      try {
+        const parsed = JSON.parse(value)
+        Object.keys(parsed).forEach(palette => {
+          const paletteArboard = newArtboard(palette, artboardY)
+          // eslint-disable-next-line no-restricted-syntax
+          for (const [label, hex] of Object.entries(parsed[palette])) {
+            const newColor = colorShape(paletteArboard, label, layerX, hex)
+            const newStyle = newSharedStyle(
+              `Color/${palette}/${label}`,
+              newColor
+            )
+            newColor.sharedStyleId = newStyle.id
+            layerX += 100
+          }
+          artboardY += 200
+          layerX = 0
+        })
+        UI.message('🍭 Color Palettes Generated')
+      } catch (error) {
+        UI.alert(
+          'Error parsing JSON 😟',
+          'Something is wrong with JSON. Please use JSON Validator and Formatter to verify your code.'
+        )
+      }
     }
   )
 }
