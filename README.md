@@ -17,7 +17,11 @@ This plugin will add all the colors from the JSON and create a shared layer styl
 }
 ```
 
+## Resources to generate colors
 You can use [Material Design Palette Generator](https://materialpalettes.com/) to generate accessible color palettes and export them in JSON that will work with this plugin without any modifications.
+
+Another tool generating a JSON file that work out-of-box is [Open Color Tools](http://opencolor.tools/)
+
 You can also use [ColorBox by Lyft Design](https://www.colorbox.io/) to generate a color palette, but it will require slight modification to the JSON code to make it work with the plugin.
 
 
@@ -30,6 +34,7 @@ If you have any problem with importing JSON code, try to validate it first and t
 - [ ] Check if any artboard already exisits inside page and create new artboards after them
 - [ ] Ask to create a style (checkbox)
 - [ ] Support any JSON format?
+- [ ] Create color palette inside color picker tool? (checkbox)
 
 ## Licence
 MIT
