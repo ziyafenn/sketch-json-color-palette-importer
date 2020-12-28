@@ -6,27 +6,45 @@ import { INITIAL_VALUE } from './shared'
 const document = sketch.getSelectedDocument()
 const page = document.selectedPage
 const Artboard = sketch.Artboard
-const Shape = sketch.ShapePath
+const ShapePath = sketch.ShapePath
+const Text = sketch.Text
+const Group = sketch.Group
 const UI = sketch.UI
 const SharedStyle = sketch.SharedStyle
 
-const newArtboard = (name, y) =>
+const ARTBOARD_WIDTH = 200
+const ARTBOARD_MARGIN = 50
+
+const newArtboard = (name, options) =>
   new Artboard({
     parent: page,
     name,
-    frame: { x: 0, y, width: 1000, height: 100 },
+    frame: { y: 0, width: ARTBOARD_WIDTH, ...options },
     flowStartPoint: true,
   })
 
-const colorShape = (parent, name, x, color) =>
-  new Shape({
+const colorItem = (parent, name, y, color) => {
+  const group = new Group({
     parent,
     name,
-    frame: { x, y: 0, width: 100, height: 100 },
+    frame: { x: 0, y, width: 100, height: 100 },
+  })
+  const shape = new ShapePath({
+    parent: group,
+    name: `${name}_square`,
+    frame: { x: 12, y: 6, width: 20, height: 20 },
     style: {
       fills: [color],
     },
   })
+  const text = new Text({
+    parent: group,
+    name: `${name}_square`,
+    text: `${name}   ${color}`,
+    frame: { x: 50, y: 5 },
+  })
+  return { group, text, shape }
+}
 
 const newSharedStyle = (name, style) =>
   SharedStyle.fromStyle({
@@ -35,8 +53,12 @@ const newSharedStyle = (name, style) =>
     document,
   })
 
-let layerX = 0
-let artboardY = 0
+const initialLayerY = 10
+const itemHeight = 40
+const artboardPadding = 10
+
+let layerY = initialLayerY
+let artboardX = 0
 
 export default function() {
   UI.getInputFromUser(
@@ -64,19 +86,30 @@ export default function() {
       }
       try {
         Object.keys(parsed).forEach(palette => {
-          const paletteArboard = newArtboard(palette, artboardY)
+          const entries = Object.entries(parsed[palette])
+          const artboardHeight =
+            entries.length * itemHeight + artboardPadding * 2
+          const paletteArboard = newArtboard(palette, {
+            x: artboardX,
+            height: artboardHeight,
+          })
           // eslint-disable-next-line no-restricted-syntax
-          for (const [label, hex] of Object.entries(parsed[palette])) {
-            const newColor = colorShape(paletteArboard, label, layerX, hex)
+          for (const [label, hex] of entries) {
+            const { shape: newColor } = colorItem(
+              paletteArboard,
+              label,
+              layerY,
+              hex
+            )
             const newStyle = newSharedStyle(
               `Color/${palette}/${label}`,
               newColor
             )
             newColor.sharedStyleId = newStyle.id
-            layerX += 100
+            layerY += itemHeight
           }
-          artboardY += 200
-          layerX = 0
+          artboardX += ARTBOARD_WIDTH + ARTBOARD_MARGIN
+          layerY = initialLayerY
         })
         UI.message('🍭 Color Palettes Generated')
       } catch (error) {
