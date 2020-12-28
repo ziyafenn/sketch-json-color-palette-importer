@@ -53,8 +53,16 @@ export default function() {
         return
       }
 
+      let parsed
       try {
-        const parsed = JSON.parse(value)
+        parsed = JSON.parse(value)
+      } catch (error) {
+        UI.alert(
+          'Error parsing JSON 😟',
+          'Something is wrong with JSON. Please use JSON Validator and Formatter to verify your code.'
+        )
+      }
+      try {
         Object.keys(parsed).forEach(palette => {
           const paletteArboard = newArtboard(palette, artboardY)
           // eslint-disable-next-line no-restricted-syntax
@@ -73,8 +81,8 @@ export default function() {
         UI.message('🍭 Color Palettes Generated')
       } catch (error) {
         UI.alert(
-          'Error parsing JSON 😟',
-          'Something is wrong with JSON. Please use JSON Validator and Formatter to verify your code.'
+          'Error creating palette',
+          'This is likely a bug in the code of the palette generator, please report.'
         )
       }
     }
