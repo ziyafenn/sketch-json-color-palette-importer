@@ -1,12 +1,12 @@
 {
   "name": "json-color-palette-importer",
   "homepage": "https://github.com/ziyafenn/sketch-json-color-palette-importer",
-  "description": "Create shared layer styles by importing JSON color palettes",
+  "description": "Create color variables by importing JSON color palettes",
   "repository": {
     "type": "git",
     "url": "https://github.com/ziyafenn/sketch-json-color-palette-importer"
   },
-  "version": "1.2.0",
+  "version": "1.2.1",
   "engines": {
     "sketch": ">=3.0"
   },
