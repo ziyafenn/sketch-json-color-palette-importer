@@ -6,9 +6,9 @@ import { INITIAL_VALUE } from './shared'
 const document = sketch.getSelectedDocument()
 const page = document.selectedPage
 const Artboard = sketch.Artboard
-const Shape = sketch.ShapePath
+const ShapePath = sketch.ShapePath
 const UI = sketch.UI
-const SharedStyle = sketch.SharedStyle
+const docSwatches = document.swatches
 
 const newArtboard = (name, y) =>
   new Artboard({
@@ -19,20 +19,20 @@ const newArtboard = (name, y) =>
   })
 
 const colorShape = (parent, name, x, color) =>
-  new Shape({
+  new ShapePath({
     parent,
     name,
     frame: { x, y: 0, width: 100, height: 100 },
     style: {
-      fills: [color],
+      fills: [{ color }],
+      borders: [{ enabled: false }],
     },
   })
 
-const newSharedStyle = (name, style) =>
-  SharedStyle.fromStyle({
+const newColorVar = (name, color) =>
+  sketch.Swatch.from({
     name,
-    style: style.style,
-    document,
+    color,
   })
 
 let layerX = 0
@@ -53,18 +53,26 @@ export default function() {
         return
       }
 
+      let parsed
       try {
-        const parsed = JSON.parse(value)
+        parsed = JSON.parse(value)
+      } catch (error) {
+        UI.alert(
+          'Error parsing JSON 😟',
+          'Something is wrong with JSON. Please use JSON Validator and Formatter to verify your code.'
+        )
+      }
+      try {
         Object.keys(parsed).forEach(palette => {
           const paletteArboard = newArtboard(palette, artboardY)
           // eslint-disable-next-line no-restricted-syntax
           for (const [label, hex] of Object.entries(parsed[palette])) {
-            const newColor = colorShape(paletteArboard, label, layerX, hex)
-            const newStyle = newSharedStyle(
-              `Color/${palette}/${label}`,
-              newColor
-            )
-            newColor.sharedStyleId = newStyle.id
+            const colorVarName = `${palette}/${label}`
+            const colorVar = newColorVar(colorVarName, hex)
+            docSwatches.push(colorVar)
+            const colorRef = colorVar.referencingColor
+            colorShape(paletteArboard, label, layerX, colorRef)
+
             layerX += 100
           }
           artboardY += 200
@@ -73,13 +81,10 @@ export default function() {
         UI.message('🍭 Color Palettes Generated')
       } catch (error) {
         UI.alert(
-          'Error parsing JSON 😟',
-          'Something is wrong with JSON. Please use JSON Validator and Formatter to verify your code.'
+          'Error creating palette 😟',
+          'This is likely a bug in the code of the palette generator, please report.'
         )
       }
     }
   )
 }
-
-// TODO Check if artboard exists, add after
-// TODO ask to create a style

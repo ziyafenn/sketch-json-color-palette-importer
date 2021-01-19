@@ -1,6 +1,6 @@
 {
   "name": "JSON Color Palette Importer",
-  "description": "Create shared layer styles by importing JSON color palettes",
+  "description": "Create color variables by importing JSON color palettes",
   "author": "Ziya Fenn",
   "authorEmail": "hello@ziyafenn.com",
   "homepage": "https://github.com/ziyafenn/sketch-json-color-palette-importer",
