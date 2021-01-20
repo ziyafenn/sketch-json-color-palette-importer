@@ -2,10 +2,16 @@
 # Sketch JSON Color Palette Importer
 Create color variables by importing JSON color palettes.
 
+### Sketch >= 69
 [Download latest version.](https://github.com/ziyafenn/sketch-json-color-palette-importer/releases/latest)
+
+### Sketch < 69
+[Download version 1.1.2](https://github.com/ziyafenn/sketch-json-color-palette-importer/releases/download/v1.1.2/json-color-palette-importer.sketchplugin.zip)
 
 ## Description
 This plugin will add all the colors from the JSON and create [color variables](https://www.sketch.com/blog/2020/10/15/how-to-make-the-most-of-color-variables/) out of them to be used inside your project.
+
+If you want to create *Shared Styles* instead of *Color Variables*, use version [1.1.2](https://github.com/ziyafenn/sketch-json-color-palette-importer/releases/download/v1.1.2/json-color-palette-importer.sketchplugin.zip).
 
 ## Supported JSON Format
 
